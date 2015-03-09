@@ -1,0 +1,28 @@
+body {
+    font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+    font-size: 100%;
+}
+
+#status {
+    /* avoid an excessively wide status text */
+    white-space: pre;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 400px;
+}
+
+.form-group {
+    padding: 20px;
+    padding-bottom: 0px;
+    min-width: 250px;
+}
+
+#button {
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+li {
+    width: 50%;
+    background-color: #D6D6D6;
+}
