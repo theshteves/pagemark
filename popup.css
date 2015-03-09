@@ -3,18 +3,20 @@ body {
     font-size: 100%;
 }
 
+/*
 #status {
-    /* avoid an excessively wide status text */
+    /* avoid an excessively wide status text /
     white-space: pre;
     text-overflow: ellipsis;
     overflow: hidden;
-    max-width: 400px;
+    width: 400px;
 }
+*/
 
 .form-group {
     padding: 20px;
     padding-bottom: 0px;
-    min-width: 250px;
+    width: 250px;
 }
 
 #button {
@@ -25,4 +27,9 @@ body {
 li {
     width: 50%;
     background-color: #D6D6D6;
+}
+
+.list-group {
+    padding: 20px;
+    width: 250px;
 }
