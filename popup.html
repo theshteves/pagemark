@@ -4,21 +4,19 @@
     <title>Pagemark</title>
     <link type="text/css" rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="popup.css">
-    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript" src="pop.js"></script>
+    <script type="text/javascript" src="popup.js"></script>
     <!--
       - JavaScript and HTML must be in separate files.
       - See our Content Security Policy documentation for details and explanation:
       - https://developer.chrome.com/extensions/contentSecurityPolicy
-     -->
+      -->
   </head>
 
   <body>
 
     <ul role="navigation" class="nav nav-tabs">
-      <li role="presentation" class="active"><a id="create-tab">Create</a></li>
-      <li role="presentation"><a id="load-tab">Load</a></li>
+      <li role="presentation" id="ct" class="active"><a id="create-tab">Create</a></li>
+      <li role="presentation" id="lt"><a id="load-tab">Load</a></li>
     </ul>
 
     <!-- Create tab -->
