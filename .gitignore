@@ -1,2 +1,5 @@
-### Mac files
+# Preserving original favicon
+*.ico
+
+# Mac files
 *.DS_Store
