@@ -29,10 +29,10 @@ li {
     background-color: #D6D6D6;
 }
 
-.list-group {
+#markList {
     padding: 20px 20px 0px;
     width: 250px;
-
+    display: none;
 }
 
 .list-group-item:first-child {
