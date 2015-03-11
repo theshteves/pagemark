@@ -1,39 +1,3 @@
-document.addEventListener('DOMContentLoaded', function() {
-
-    // Tab switching
-    document.getElementById("create-tab").addEventListener("click", function() {
-	document.getElementById("load-tab").removeAttribute("class");
-	document.getElementById("create-tab").setAttribute("class", "active");
-	document.getElementById("markList").style.display = "none";
-	document.getElementById("enterMark").style.display = "block";
-	document.getElementById("save-button").style.display = "block";
-    });
-    document.getElementById("load-tab").addEventListener("click", function() {
-	document.getElementById("create-tab").removeAttribute("class");
-	document.getElementById("load-tab").setAttribute("class", "active");
-	document.getElementById("save-button").style.display = "none";
-	document.getElementById("markList").style.display = "block";
-	document.getElementById("enterMark").style.display = "none";
-    });
-
-    // Save pagemark
-    document.getElementById("save-button").addEventListener("click", function() {
-	var markName = document.getElementById("inputName").value;
-	//var markLink = getCurrentTabUrl();
-	var mark = document.createElement("A");
-	mark.appendChild(document.createTextNode(markName));
-	//mark.setAttribute("href", markLink);
-	mark.setAttribute("class", "list-group-item");
-	document.getElementById("markList").appendChild(mark);
-
-    });
-});
-
-function getScroll() {
-
-    return 100
-}
-
 // Copyright (c) 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -82,4 +46,67 @@ function getCurrentTabUrl(callback) {
   //   url = tabs[0].url;
   // });
   // alert(url); // Shows "undefined", because chrome.tabs.query is async.
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    // Tab switching (via tab click)
+    document.getElementById("create-tab").addEventListener("click", function() {
+	document.getElementById("load-tab").removeAttribute("class");
+	document.getElementById("create-tab").setAttribute("class", "active");
+	document.getElementById("markList").style.display = "none";
+	document.getElementById("enterMark").style.display = "block";
+	document.getElementById("save-button").style.display = "block";
+    });
+    document.getElementById("load-tab").addEventListener("click", function() {
+	document.getElementById("create-tab").removeAttribute("class");
+	document.getElementById("load-tab").setAttribute("class", "active");
+	document.getElementById("save-button").style.display = "none";
+	document.getElementById("markList").style.display = "block";
+	document.getElementById("enterMark").style.display = "none";
+
+	// Get stored pagemarks
+	chrome.storage.local.get(function (items) {
+	    //console.log(items);
+	    var mark = document.createElement("A");
+	    mark.appendChild(document.createTextNode(items.name));
+	    mark.setAttribute("href", items.link);
+	    mark.setAttribute("class", "list-group-item");
+	    document.getElementById("markList").appendChild(mark);
+	});
+    });
+
+
+
+    // Tab switching (via arrow keys)
+
+    // Save pagemark on 'save-button' click
+    document.getElementById("save-button").addEventListener("click", function() {
+
+	var markName = document.getElementById("inputName").value;
+	if (markName != "") {
+	    var markLink = "http://www.google.com/"; //getCurrentTabUrl();
+
+	    // Store pagemark
+	    chrome.storage.local.set({"url": markName, "name": markName, "value": markLink});
+	    document.getElementById("load-tab").click();
+	}
+    });
+});
+
+//document.onkeypress = onPress;
+function onPress(key) {
+    if (key.keyCode == 37 || key.keyCode == 39) {
+	if (document.getElementById("load-tab").classList.contains("active")) {
+	    document.getElementById("create-tab").click();
+	} else {
+	    document.getElementById("load-tab").click();
+	}
+    }
+}
+
+function getScroll() {
+
+    return 100
 }
