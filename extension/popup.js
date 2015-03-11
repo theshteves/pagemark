@@ -51,7 +51,7 @@ function getCurrentTabUrl(callback) {
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    // Tab switching (via tab click)
+    // Tab switching (via click)
     document.getElementById("create-tab").addEventListener("click", function() {
 	document.getElementById("load-tab").removeAttribute("class");
 	document.getElementById("create-tab").setAttribute("class", "active");
@@ -66,47 +66,57 @@ document.addEventListener('DOMContentLoaded', function() {
 	document.getElementById("markList").style.display = "block";
 	document.getElementById("enterMark").style.display = "none";
 
+	*/
 	// Get stored pagemarks
-	chrome.storage.local.get(function (items) {
+	chrome.storage.sync.get(function (items) {
 	    //console.log(items);
-	    var mark = document.createElement("A");
-	    mark.appendChild(document.createTextNode(items.name));
-	    mark.setAttribute("href", items.link);
-	    mark.setAttribute("class", "list-group-item");
-	    document.getElementById("markList").appendChild(mark);
+	    if (document.getElementById(items.name + "-link")) {
+	    } else {
+		var mark = document.createElement("A");
+		mark.appendChild(document.createTextNode(items.name));
+		mark.setAttribute("href", items.link);
+		mark.setAttribute("class", "list-group-item");
+		mark.setAttribute("id", items.name + "-link");
+		document.getElementById("markList").appendChild(mark);
+	    }
 	});
+
+
     });
 
-
-
+    /*
     // Tab switching (via arrow keys)
+    document.body.addEventListener("keypress", function(e) {
+	if (e.keyCode == 37 || e.keyCode == 39) {
+	    if (document.getElementById("load-tab").classList.contains("active")) {
+		document.getElementById("create-tab").click();
+	    } else {
+		document.getElementById("load-tab").click();
+	    }
+	}
+    });
+    */
+
 
     // Save pagemark on 'save-button' click
     document.getElementById("save-button").addEventListener("click", function() {
-
 	var markName = document.getElementById("inputName").value;
-	if (markName != "") {
+	if (markName == "" && !document.getElementById("alert")) {
+	    var alert = document.createElement("DIV");
+	    var message = document.createElement("STRONG");
+	    message.appendChild(document.createTextNode("Woops!"));
+	    alert.appendChild(message);
+	    alert.appendChild(document.createTextNode(" Name Required."));
+	    alert.setAttribute("class", "alert alert-danger");
+	    alert.setAttribute("role", "alert");
+	    alert.setAttribute("id", "alert");
+	    document.getElementById("enterMark").appendChild(alert);
+	} else if (markName == "") {
+	} else {
 	    var markLink = "http://www.google.com/"; //getCurrentTabUrl();
-
-	    // Store pagemark
-	    chrome.storage.local.set({"url": markName, "name": markName, "value": markLink});
+	    chrome.storage.sync.set({"name": markName, "value": markLink});
 	    document.getElementById("load-tab").click();
 	}
     });
+
 });
-
-//document.onkeypress = onPress;
-function onPress(key) {
-    if (key.keyCode == 37 || key.keyCode == 39) {
-	if (document.getElementById("load-tab").classList.contains("active")) {
-	    document.getElementById("create-tab").click();
-	} else {
-	    document.getElementById("load-tab").click();
-	}
-    }
-}
-
-function getScroll() {
-
-    return 100
-}
